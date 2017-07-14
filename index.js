@@ -12,68 +12,68 @@ const CacheHandler = require('./CacheHandler')
 
 module.exports = class Tgux extends Tg {
 
-	constructor(token, options = {}) {
-		super(token, options)
+    constructor(token, options = {}) {
+        super(token, options)
 
-		this.cache = new CacheHandler
+        this.cache = new CacheHandler
 
-		this.stores = {}
-		this.activities = {}
+        this.stores = {}
+        this.activities = {}
 
-		this.on('message', co.wrap(function*(message) {
+        this.on('message', co.wrap(function*(message) {
 
-			let chatId = message.chat.id
-			let store = this.stores[chatId]
+            let chatId = message.chat.id
+            let store = this.stores[chatId]
 
-			if (!store) {
-				let initState = yield this.cache.get('State' + chatId)
+            if (!store) {
+                let initState = yield this.cache.get('State' + chatId)
 
-				if (!initState) {
-					initState = defaultState.set('message', message)
-				}
+                if (!initState) {
+                    initState = defaultState.set('message', message)
+                }
 
-				store = Redux.createStore(reducer, initState)
+                store = Redux.createStore(reducer, initState)
 
-				store.subscribe(function() {
-					let state = store.getState().toJS()
-					let {activity, action, message, params, reason} = state
+                store.subscribe(function() {
+                    let state = store.getState().toJS()
+                    let {activity, action, message, params, reason} = state
 
-					debug({activity, action, message: message && message.text, params, reason})
+                    debug({activity, action, message: message && message.text, params, reason})
 
-					if (message) {
-						this.cache.set('State' + message.chat.id, state)
-					}
+                    if (message) {
+                        this.cache.set('State' + message.chat.id, state)
+                    }
 
-					this.activities[activity].dispatch(action, [message, new History(store, reason, params)])
+                    this.activities[activity].dispatch(action, [message, new History(store, reason, params)])
 
-				}.bind(this))
+                }.bind(this))
 
-				this.stores[chatId] = store
-			}
+                this.stores[chatId] = store
+            }
 
-			if (message.text == '/start') {
-				return store.dispatch({type: 'REST', payload: {message}})
-			}
+            if (message.text == '/start') {
+                return store.dispatch({type: 'REST', payload: {message}})
+            }
 
-			let {activity, action, params} = store.getState().toJS()
+            let {activity, action, params} = store.getState().toJS()
 
-			if (action == 'home') {
-				let refer = this.activities[activity].checkRedirect(message.text)
-				if (refer) {
-					return store.dispatch({type: 'FW', payload: {message, refer, params}})
-				}
-			}
+            if (action == 'home') {
+                let refer = this.activities[activity].checkRedirect(message.text)
+                if (refer) {
+                    return store.dispatch({type: 'FW', payload: {message, refer, params}})
+                }
+            }
 
-			store.dispatch({type: 'RECV', payload: {message}})
-		}))
-	}
+            store.dispatch({type: 'RECV', payload: {message}})
+        }))
+    }
 
-	setCacheHandler(handler) {
-		this.cache = new handler
-	}
+    setCacheHandler(handler) {
+        this.cache = new handler
+    }
 
-	createActivity(name, callback) {
-		this.activities[name] = new Activity(name)
-		callback(this.activities[name])
-	}
+    createActivity(name, callback) {
+        this.activities[name] = new Activity(name)
+        callback(this.activities[name])
+    }
 }
