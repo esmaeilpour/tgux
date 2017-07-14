@@ -19,9 +19,7 @@ Comming soon...
 
 var Bot = require('tgux');
 
-var bot = new Bot({
-  token: 'TOKEN HERE'
-})
+var bot = new Bot('TOKEN HERE', {polling: true})
 
 bot.createActivity('start', (activity) => {
   activity.on('home', (msg) => {
@@ -31,7 +29,7 @@ bot.createActivity('start', (activity) => {
         resize_keyboard: true,
       })
     }
-    bot.sendMessage(msg.chat.id, 'hello', opts)
+    bot.sendMessage(msg.chat.id, `hello ${msg.from.first_name}`, opts)
   })
 
   activity.on('Help', ['help', 'home'])

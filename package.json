@@ -1,6 +1,6 @@
 {
   "name": "tgux",
-  "version": "0.1.0",
+  "version": "0.1.3",
   "description": "make own telegram bot based on Redux",
   "author": "Mohamad Esmaeilpour (esmaeilpoor.info@gmail.com)",
   "dependencies": {
