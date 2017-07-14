@@ -1,5 +1,5 @@
 {
-  "name": "Tgux",
+  "name": "tgux",
   "version": "0.1.0",
   "description": "make own telegram bot based on Redux",
   "author": "Mohamad Esmaeilpour (esmaeilpoor.info@gmail.com)",
@@ -9,5 +9,28 @@
     "immutable": "^3.8.1",
     "node-telegram-bot-api": "^0.27.1",
     "redux": "^3.7.1"
-  }
+  },
+  "main": "index.js",
+  "directories": {
+    "example": "example"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/esmaeilpour/tgux.git"
+  },
+  "keywords": [
+    "telegram",
+    "redux",
+    "immutable",
+    "bot"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/esmaeilpour/tgux/issues"
+  },
+  "homepage": "https://github.com/esmaeilpour/tgux#readme"
 }
