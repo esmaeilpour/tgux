@@ -12,7 +12,7 @@ make own telegram bot based on Redux
 
 ## Documentation
 
-Comming soon...
+Coming soon...
 
 
 ## Here's an example:
