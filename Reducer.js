@@ -52,7 +52,7 @@ const reducer = function(state, {type, payload = {}}) {
             return defaultState.merge({message})
         }
         default: {
-            return state
+            return Immutable.Map(state)
         }
     }
 }

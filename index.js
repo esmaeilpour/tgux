@@ -1,4 +1,3 @@
-
 const co = require('co')
 const Redux = require('redux')
 const Immutable = require('immutable')
