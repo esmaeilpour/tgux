@@ -1,3 +1,5 @@
+'use strict'
+
 const debugSet = require('debug')('tgux:cacheWrite')
 const debugGet = require('debug')('tgux:cacheRead')
 
