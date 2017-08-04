@@ -4,13 +4,14 @@
   "description": "make own telegram bot based on Redux",
   "author": "Mohamad Esmaeilpour (esmaeilpoor.info@gmail.com)",
   "dependencies": {
+    "backpack-core": "^0.4.1",
     "co": "^4.6.0",
     "debug": "^2.6.8",
     "immutable": "^3.8.1",
     "node-telegram-bot-api": "^0.27.1",
     "redux": "^3.7.1"
   },
-  "main": "index.js",
+  "main": "build/main.js",
   "directories": {
     "example": "example"
   },
@@ -19,7 +20,8 @@
     "should": "^11.2.1"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "backpack build"
   },
   "repository": {
     "type": "git",
