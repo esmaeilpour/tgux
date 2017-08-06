@@ -1,6 +1,7 @@
 # tgux
 make own telegram bot based on Redux
 
+[![Build Status](https://travis-ci.org/esmaeilpour/tgux.png)](https://travis-ci.org/esmaeilpour/tgux)
 [![npm version](https://img.shields.io/npm/v/tgux.svg?style=flat-square)](https://www.npmjs.com/package/tgux)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/esmaeilpour/tgux/master/LICENSE)
 
