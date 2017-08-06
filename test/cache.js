@@ -3,7 +3,7 @@
 const assert = require('assert')
 const should = require('should')
 
-const CacheHandler = require('../CacheHandler')
+const CacheHandler = require('../src/CacheHandler')
 
 describe('Cache', function() {
   let handler = new CacheHandler()
