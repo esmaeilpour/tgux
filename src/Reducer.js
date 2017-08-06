@@ -1,16 +1,8 @@
-const Immutable = require('immutable')
 const debug = require('debug')('tgux:reducer')
+const Immutable = require('immutable')
+const defaultState = require('./DefaultState')
 
-const defaultState = Immutable.fromJS({
-    activity: 'start',
-    action: 'home',
-    message: undefined,
-    params: {},
-    reason: 'normal',
-    referer: {},
-})
-
-const reducer = function(state, {type, payload = {}}) {
+module.exports = function(state, {type, payload = {}}) {
     debug(type, payload, state)
 
     switch(type) {
@@ -55,9 +47,4 @@ const reducer = function(state, {type, payload = {}}) {
             return Immutable.Map(state)
         }
     }
-}
-
-module.exports = {
-    reducer,
-    defaultState,
 }

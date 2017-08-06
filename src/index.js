@@ -4,10 +4,11 @@ const Immutable = require('immutable')
 const Tg = require('node-telegram-bot-api')
 const debug = require('debug')('tgux:subscribe')
 
-const {reducer, defaultState} = require('./Reducer')
+const Reducer = require('./Reducer')
 const Activity = require('./Activity')
 const History = require('./History')
 const CacheHandler = require('./CacheHandler')
+const defaultState = require('./DefaultState')
 
 module.exports = class Tgux extends Tg {
 
@@ -31,7 +32,7 @@ module.exports = class Tgux extends Tg {
                     initState = defaultState.set('message', message)
                 }
 
-                store = Redux.createStore(reducer, initState)
+                store = Redux.createStore(Reducer, initState)
 
                 store.subscribe(function() {
                     let state = store.getState().toJS()
