@@ -1,0 +1,13 @@
+{
+  "name": "tgux examples",
+  "version": "0.0.1",
+  "description": "Examples for tgux",
+  "author": "Mohamad Esmaeilpour (esmaeilpoor.info@gmail.com)",
+  "dependencies": {
+    "co-redis": "^2.1.1",
+    "redis": "^2.7.1"
+  },
+  "scripts": {
+    "start": "node index.js"
+  }
+}
