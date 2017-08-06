@@ -4,7 +4,6 @@
   "description": "make own stateful telegram bot based on Redux",
   "author": "Mohamad Esmaeilpour (esmaeilpoor.info@gmail.com)",
   "dependencies": {
-    "backpack-core": "^0.4.1",
     "co": "^4.6.0",
     "debug": "^2.6.8",
     "immutable": "^3.8.1",
@@ -16,6 +15,7 @@
     "example": "example"
   },
   "devDependencies": {
+    "backpack-core": "^0.4.1",
     "mocha": "^3.4.2",
     "should": "^11.2.1"
   },
