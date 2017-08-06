@@ -1,6 +1,6 @@
 {
   "name": "tgux",
-  "version": "0.1.3",
+  "version": "0.1.5",
   "description": "make own stateful telegram bot based on Redux",
   "author": "Mohamad Esmaeilpour (esmaeilpoor.info@gmail.com)",
   "dependencies": {
