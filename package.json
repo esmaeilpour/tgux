@@ -1,7 +1,7 @@
 {
   "name": "tgux",
   "version": "0.1.3",
-  "description": "make own telegram bot based on Redux",
+  "description": "make own stateful telegram bot based on Redux",
   "author": "Mohamad Esmaeilpour (esmaeilpoor.info@gmail.com)",
   "dependencies": {
     "backpack-core": "^0.4.1",
@@ -31,7 +31,12 @@
     "telegram",
     "redux",
     "immutable",
-    "bot"
+    "bot",
+    "telegram bot",
+    "telegram bot api",
+    "telegram form",
+    "telegram stateful",
+    "telegram keywords"
   ],
   "license": "MIT",
   "bugs": {
