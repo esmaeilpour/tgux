@@ -28,7 +28,7 @@ npm install --save tgux
 ```js
 import Tgux from 'tgux'
 
-var bot = new Bot('TOKEN HERE', {polling: true})
+var bot = new Tgux('TOKEN HERE', {polling: true})
 
 bot.createActivity('start', (activity) => {
   activity.on('home', (msg) => {
