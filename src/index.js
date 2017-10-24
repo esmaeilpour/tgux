@@ -5,13 +5,10 @@ import Immutable from 'immutable'
 import TelegramBot from 'node-telegram-bot-api'
 import Debug from 'debug'
 
-import Reducer from './Reducer'
+import Reducer, {defaultState} from './Reducer'
 import Activity from './Activity'
 import History from './History'
 import CacheHandler from './CacheHandler'
-import {
-  defaultState
-} from './DefaultState'
 
 const debug = Debug('tgux:subscriber')
 

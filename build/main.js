@@ -62,7 +62,7 @@ module.exports =
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -81,40 +81,13 @@ module.exports = require("debug");
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
+module.exports = __webpack_require__(3);
 
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.defaultState = undefined;
-
-var _immutable = __webpack_require__(0);
-
-var _immutable2 = _interopRequireDefault(_immutable);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-const defaultState = exports.defaultState = _immutable2.default.fromJS({
-  activity: 'start',
-  action: 'home',
-  message: undefined,
-  params: {},
-  reason: 'normal',
-  referer: {}
-});
 
 /***/ }),
 /* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(4);
-
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
 "use strict";
 
 
@@ -122,13 +95,13 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _redux = __webpack_require__(5);
+var _redux = __webpack_require__(4);
 
 var _immutable = __webpack_require__(0);
 
 var _immutable2 = _interopRequireDefault(_immutable);
 
-var _nodeTelegramBotApi = __webpack_require__(6);
+var _nodeTelegramBotApi = __webpack_require__(5);
 
 var _nodeTelegramBotApi2 = _interopRequireDefault(_nodeTelegramBotApi);
 
@@ -136,23 +109,21 @@ var _debug = __webpack_require__(1);
 
 var _debug2 = _interopRequireDefault(_debug);
 
-var _Reducer = __webpack_require__(7);
+var _Reducer = __webpack_require__(6);
 
 var _Reducer2 = _interopRequireDefault(_Reducer);
 
-var _Activity = __webpack_require__(8);
+var _Activity = __webpack_require__(7);
 
 var _Activity2 = _interopRequireDefault(_Activity);
 
-var _History = __webpack_require__(9);
+var _History = __webpack_require__(8);
 
 var _History2 = _interopRequireDefault(_History);
 
-var _CacheHandler = __webpack_require__(10);
+var _CacheHandler = __webpack_require__(9);
 
 var _CacheHandler2 = _interopRequireDefault(_CacheHandler);
-
-var _DefaultState = __webpack_require__(2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -177,7 +148,7 @@ exports.default = class extends _nodeTelegramBotApi2.default {
         let initState = await this.cache.get('State' + chatId);
 
         if (!initState) {
-          initState = _DefaultState.defaultState.set('message', message);
+          initState = _Reducer.defaultState.set('message', message);
         }
 
         store = (0, _redux.createStore)(_Reducer2.default, initState);
@@ -280,19 +251,19 @@ exports.default = class extends _nodeTelegramBotApi2.default {
 };
 
 /***/ }),
-/* 5 */
+/* 4 */
 /***/ (function(module, exports) {
 
 module.exports = require("redux");
 
 /***/ }),
-/* 6 */
+/* 5 */
 /***/ (function(module, exports) {
 
 module.exports = require("node-telegram-bot-api");
 
 /***/ }),
-/* 7 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -301,6 +272,7 @@ module.exports = require("node-telegram-bot-api");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.defaultState = undefined;
 
 exports.default = function (state, {
   type,
@@ -365,7 +337,7 @@ exports.default = function (state, {
         let {
           message
         } = payload;
-        return _DefaultState.defaultState.merge({
+        return defaultState.merge({
           message
         });
       }
@@ -380,14 +352,21 @@ var _immutable = __webpack_require__(0);
 
 var _immutable2 = _interopRequireDefault(_immutable);
 
-var _DefaultState = __webpack_require__(2);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 const debug = __webpack_require__(1)('tgux:reducer');
 
+const defaultState = exports.defaultState = _immutable2.default.fromJS({
+  activity: 'start',
+  action: 'home',
+  message: undefined,
+  params: {},
+  reason: 'normal',
+  referer: {}
+});
+
 /***/ }),
-/* 8 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -438,7 +417,7 @@ exports.default = class {
 };
 
 /***/ }),
-/* 9 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -491,7 +470,7 @@ exports.default = class {
 };
 
 /***/ }),
-/* 10 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

@@ -5,7 +5,7 @@ const should = require('should')
 
 const Immutable = require('immutable')
 const Reducer = require('../src/Reducer').default
-const defaultState = require('../src/DefaultState').defaultState
+const defaultState = require('../src/Reducer').defaultState
 
 describe('Reducer', function() {
 

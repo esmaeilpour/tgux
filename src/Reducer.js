@@ -1,9 +1,15 @@
 import Immutable from 'immutable'
-import {
-  defaultState
-} from './DefaultState'
 
 const debug = require('debug')('tgux:reducer')
+
+export const defaultState = Immutable.fromJS({
+  activity: 'start',
+  action: 'home',
+  message: undefined,
+  params: {},
+  reason: 'normal',
+  referer: {},
+})
 
 export default function (state, {
   type,
