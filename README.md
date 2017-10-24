@@ -60,7 +60,7 @@ bot.createActivity('help', (activity) => {
 
 ```
 
-## Custome Cache Handler
+## Custom Cache Handler
 
 ```js
 var co = require('co');
