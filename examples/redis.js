@@ -1,4 +1,4 @@
-const Bot = require('..')
+const Bot = require('..').default
 const co = require('co')
 const redisClient = require('redis').createClient()
 const wrapper = require('co-redis')
@@ -20,7 +20,7 @@ const CacheHandler = class {
   }
 }
 
-bot.setCacheHandler(CacheHandler)
+bot.setCacheHandler(new CacheHandler)
 
 bot.createActivity('start', (activity) => {
 

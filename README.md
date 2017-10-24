@@ -26,7 +26,7 @@ npm install --save tgux
 ## Usage
 
 ```js
-var Bot = require('tgux');
+import Tgux from 'tgux'
 
 var bot = new Bot('TOKEN HERE', {polling: true})
 

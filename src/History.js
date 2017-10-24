@@ -1,21 +1,34 @@
-const Immutable = require('immutable')
-const debug = require('debug')('tgux:history')
+import Immutable from 'immutable'
+import Debug from 'debug'
 
-module.exports = class History {
-    constructor(store, reason = 'normal', params = {}) {
-        this.store = store
-        this.reason = reason
-        this.params = params
-    }
+const debug = Debug('tgux:history')
 
-    forward(refer, params) {
-        debug('Forward', refer)
-        let {message} = this.store.getState().toJS()
-        this.store.dispatch({type: 'FW', payload: {message, refer, params}})
-    }
+export default class {
+  constructor(store, reason = 'normal', params = {}) {
+    this.store = store
+    this.reason = reason
+    this.params = params
+  }
 
-    back() {
-        debug('Back')
-        this.store.dispatch({type: 'BACK'})
-    }
+  forward(refer, params) {
+    debug('Forward', refer)
+    let {
+      message
+    } = this.store.getState().toJS()
+    this.store.dispatch({
+      type: 'FW',
+      payload: {
+        message,
+        refer,
+        params
+      }
+    })
+  }
+
+  back() {
+    debug('Back')
+    this.store.dispatch({
+      type: 'BACK'
+    })
+  }
 }

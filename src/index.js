@@ -1,79 +1,138 @@
-const co = require('co')
-const Redux = require('redux')
-const Immutable = require('immutable')
-const Tg = require('node-telegram-bot-api')
-const debug = require('debug')('tgux:subscribe')
+import {
+  createStore
+} from 'redux'
+import Immutable from 'immutable'
+import TelegramBot from 'node-telegram-bot-api'
+import Debug from 'debug'
 
-const Reducer = require('./Reducer')
-const Activity = require('./Activity')
-const History = require('./History')
-const CacheHandler = require('./CacheHandler')
-const defaultState = require('./DefaultState')
+import Reducer from './Reducer'
+import Activity from './Activity'
+import History from './History'
+import CacheHandler from './CacheHandler'
+import {
+  defaultState
+} from './DefaultState'
 
-module.exports = class Tgux extends Tg {
+const debug = Debug('tgux:subscriber')
 
-    constructor(token, options = {}) {
-        super(token, options)
+export default class extends TelegramBot {
 
-        this.cache = new CacheHandler
+  constructor(token, options = {}) {
+    super(token, options)
 
-        this.stores = {}
-        this.activities = {}
+    this.cache = new CacheHandler
 
-        this.on('message', co.wrap(function*(message) {
+    this.stores = {}
+    this.activities = {}
 
-            let chatId = message.chat.id
-            let store = this.stores[chatId]
+    this.on('message', async(message) => {
 
-            if (!store) {
-                let initState = yield this.cache.get('State' + chatId)
+      let chatId = message.chat.id
+      let store = this.stores[chatId]
 
-                if (!initState) {
-                    initState = defaultState.set('message', message)
-                }
+      if (!store) {
+        let initState = await this.cache.get('State' + chatId)
 
-                store = Redux.createStore(Reducer, initState)
+        if (!initState) {
+          initState = defaultState.set('message', message)
+        }
 
-                store.subscribe(function() {
-                    let state = store.getState().toJS()
-                    let {activity, action, message, params, reason} = state
+        store = createStore(Reducer, initState)
 
-                    debug({activity, action, message: message && message.text, params, reason})
+        store.subscribe(function () {
+          let state = store.getState().toJS()
+          let {
+            activity,
+            action,
+            message,
+            params,
+            reason
+          } = state
 
-                    if (message) {
-                        this.cache.set('State' + message.chat.id, state)
-                    }
+          debug({
+            activity,
+            action,
+            message: message && message.text,
+            params,
+            reason
+          })
 
-                    this.activities[activity].dispatch(action, [message, new History(store, reason, params)])
+          if (message) {
+            this.cache.set('State' + message.chat.id, state)
+          }
 
-                }.bind(this))
+          this.activities[activity].dispatch(action, [message, new History(store, reason, params)])
 
-                this.stores[chatId] = store
+        }.bind(this))
+
+        this.stores[chatId] = store
+      }
+
+      if (message.text == '/start') {
+        return store.dispatch({
+          type: 'REST',
+          payload: {
+            message
+          }
+        })
+      }
+
+      let {
+        activity,
+        action,
+        params
+      } = store.getState().toJS()
+
+      if (action == 'home') {
+        let refer = this.activities[activity].checkRedirect(message.text)
+        if (refer) {
+          return store.dispatch({
+            type: 'FW',
+            payload: {
+              message,
+              refer,
+              params
             }
+          })
+        }
+      }
 
-            if (message.text == '/start') {
-                return store.dispatch({type: 'REST', payload: {message}})
-            }
+      store.dispatch({
+        type: 'RECV',
+        payload: {
+          message
+        }
+      })
+    })
+  }
 
-            let {activity, action, params} = store.getState().toJS()
-
-            if (action == 'home') {
-                let refer = this.activities[activity].checkRedirect(message.text)
-                if (refer) {
-                    return store.dispatch({type: 'FW', payload: {message, refer, params}})
-                }
-            }
-
-            store.dispatch({type: 'RECV', payload: {message}})
-        }))
+  setCacheHandler(handler) {
+    if (typeof handler == 'function') {
+      handler = new handler
     }
+    this.cache = handler
+  }
 
-    setCacheHandler(handler) {
-        this.cache = new handler
-    }
+  createActivity(name, callback) {
+    this.activities[name] = new Activity(name)
+    callback(this.activities[name])
+  }
 
-    createActivity(name, callback) {
-        this.activities[name] = new Activity(name)
-        callback(this.activities[name])
+  forwardChatId(chatId, refer, params = {}) {
+    let store = this.stores[chatId]
+    if (!store) {
+      return false
     }
+    let {
+      message
+    } = store.getState().toJS()
+    return store.dispatch({
+      type: 'FW',
+      payload: {
+        message,
+        refer,
+        params
+      }
+    })
+  }
 }

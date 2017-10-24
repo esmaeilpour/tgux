@@ -1,10 +1,10 @@
-const Immutable = require('immutable')
+import Immutable from 'immutable'
 
-module.exports = Immutable.fromJS({
-    activity: 'start',
-    action: 'home',
-    message: undefined,
-    params: {},
-    reason: 'normal',
-    referer: {},
+export const defaultState = Immutable.fromJS({
+  activity: 'start',
+  action: 'home',
+  message: undefined,
+  params: {},
+  reason: 'normal',
+  referer: {},
 })

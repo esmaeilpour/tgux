@@ -4,6 +4,7 @@
   "description": "Examples for tgux",
   "author": "Mohamad Esmaeilpour (esmaeilpoor.info@gmail.com)",
   "dependencies": {
+    "co": "^4.6.0",
     "co-redis": "^2.1.1",
     "redis": "^2.7.1"
   },

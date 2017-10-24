@@ -1,29 +1,28 @@
-'use strict'
+import Debug from 'debug'
 
-const debugSet = require('debug')('tgux:cacheWrite')
-const debugGet = require('debug')('tgux:cacheRead')
+const debug = Debug('tgux:cache')
 
-module.exports = class CacheHandler {
-    constructor() {
-        this.data = {}
-    }
+export default class {
+  constructor() {
+    this.data = {}
+  }
 
-    set(key, value) {
-        debugSet(key, value)
-        return new Promise(function(resolve) {
-            this.data[key] = value
-            resolve()
-        }.bind(this))
-    }
+  set(key, value) {
+    debug('Write', key, value)
+    return new Promise(function (resolve) {
+      this.data[key] = value
+      resolve()
+    }.bind(this))
+  }
 
-    get(key) {
-        debugGet(key)
-        return new Promise(function(resolve) {
-            if (key in this.data) {
-                return resolve(this.data[key])
-            } else {
-                return resolve(false)
-            }
-        }.bind(this))
-    }
+  get(key) {
+    debug('Read', key)
+    return new Promise(function (resolve) {
+      if (key in this.data) {
+        return resolve(this.data[key])
+      } else {
+        return resolve(false)
+      }
+    }.bind(this))
+  }
 }

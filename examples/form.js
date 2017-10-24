@@ -1,4 +1,4 @@
-const Bot = require('../')
+const Bot = require('../').default
 
 const bot = new Bot(process.env.TOKEN, {polling: true})
 
