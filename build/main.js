@@ -79,14 +79,23 @@ module.exports = require("debug");
 
 /***/ }),
 /* 2 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_immutable__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_immutable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_immutable__);
 
 
-const defaultState = __WEBPACK_IMPORTED_MODULE_0_immutable___default.a.fromJS({
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.defaultState = undefined;
+
+var _immutable = __webpack_require__(0);
+
+var _immutable2 = _interopRequireDefault(_immutable);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+const defaultState = exports.defaultState = _immutable2.default.fromJS({
   activity: 'start',
   action: 'home',
   message: undefined,
@@ -94,8 +103,6 @@ const defaultState = __WEBPACK_IMPORTED_MODULE_0_immutable___default.a.fromJS({
   reason: 'normal',
   referer: {}
 });
-/* harmony export (immutable) */ __webpack_exports__["a"] = defaultState;
-
 
 /***/ }),
 /* 3 */
@@ -106,42 +113,57 @@ module.exports = __webpack_require__(4);
 
 /***/ }),
 /* 4 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_redux__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_redux___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_redux__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_immutable__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_immutable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_immutable__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_node_telegram_bot_api__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_node_telegram_bot_api___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_node_telegram_bot_api__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_debug__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_debug___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_debug__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Reducer__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Activity__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__History__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__CacheHandler__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__DefaultState__ = __webpack_require__(2);
 
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
+var _redux = __webpack_require__(5);
 
+var _immutable = __webpack_require__(0);
 
+var _immutable2 = _interopRequireDefault(_immutable);
 
+var _nodeTelegramBotApi = __webpack_require__(6);
 
+var _nodeTelegramBotApi2 = _interopRequireDefault(_nodeTelegramBotApi);
 
+var _debug = __webpack_require__(1);
 
+var _debug2 = _interopRequireDefault(_debug);
 
+var _Reducer = __webpack_require__(7);
 
-const debug = __WEBPACK_IMPORTED_MODULE_3_debug___default()('tgux:subscriber');
+var _Reducer2 = _interopRequireDefault(_Reducer);
 
-/* harmony default export */ __webpack_exports__["default"] = (class extends __WEBPACK_IMPORTED_MODULE_2_node_telegram_bot_api___default.a {
+var _Activity = __webpack_require__(8);
+
+var _Activity2 = _interopRequireDefault(_Activity);
+
+var _History = __webpack_require__(9);
+
+var _History2 = _interopRequireDefault(_History);
+
+var _CacheHandler = __webpack_require__(10);
+
+var _CacheHandler2 = _interopRequireDefault(_CacheHandler);
+
+var _DefaultState = __webpack_require__(2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+const debug = (0, _debug2.default)('tgux:subscriber');
+
+exports.default = class extends _nodeTelegramBotApi2.default {
 
   constructor(token, options = {}) {
     super(token, options);
 
-    this.cache = new __WEBPACK_IMPORTED_MODULE_7__CacheHandler__["a" /* default */]();
+    this.cache = new _CacheHandler2.default();
 
     this.stores = {};
     this.activities = {};
@@ -155,10 +177,10 @@ const debug = __WEBPACK_IMPORTED_MODULE_3_debug___default()('tgux:subscriber');
         let initState = await this.cache.get('State' + chatId);
 
         if (!initState) {
-          initState = __WEBPACK_IMPORTED_MODULE_8__DefaultState__["a" /* defaultState */].set('message', message);
+          initState = _DefaultState.defaultState.set('message', message);
         }
 
-        store = Object(__WEBPACK_IMPORTED_MODULE_0_redux__["createStore"])(__WEBPACK_IMPORTED_MODULE_4__Reducer__["a" /* default */], initState);
+        store = (0, _redux.createStore)(_Reducer2.default, initState);
 
         store.subscribe(function () {
           let state = store.getState().toJS();
@@ -182,7 +204,7 @@ const debug = __WEBPACK_IMPORTED_MODULE_3_debug___default()('tgux:subscriber');
             this.cache.set('State' + message.chat.id, state);
           }
 
-          this.activities[activity].dispatch(action, [message, new __WEBPACK_IMPORTED_MODULE_6__History__["a" /* default */](store, reason, params)]);
+          this.activities[activity].dispatch(action, [message, new _History2.default(store, reason, params)]);
         }.bind(this));
 
         this.stores[chatId] = store;
@@ -234,7 +256,7 @@ const debug = __WEBPACK_IMPORTED_MODULE_3_debug___default()('tgux:subscriber');
   }
 
   createActivity(name, callback) {
-    this.activities[name] = new __WEBPACK_IMPORTED_MODULE_5__Activity__["a" /* default */](name);
+    this.activities[name] = new _Activity2.default(name);
     callback(this.activities[name]);
   }
 
@@ -255,7 +277,7 @@ const debug = __WEBPACK_IMPORTED_MODULE_3_debug___default()('tgux:subscriber');
       }
     });
   }
-});
+};
 
 /***/ }),
 /* 5 */
@@ -271,18 +293,16 @@ module.exports = require("node-telegram-bot-api");
 
 /***/ }),
 /* 7 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_immutable__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_immutable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_immutable__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__DefaultState__ = __webpack_require__(2);
 
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-const debug = __webpack_require__(1)('tgux:reducer');
-
-/* harmony default export */ __webpack_exports__["a"] = (function (state, {
+exports.default = function (state, {
   type,
   payload = {}
 }) {
@@ -345,27 +365,45 @@ const debug = __webpack_require__(1)('tgux:reducer');
         let {
           message
         } = payload;
-        return __WEBPACK_IMPORTED_MODULE_1__DefaultState__["a" /* defaultState */].merge({
+        return _DefaultState.defaultState.merge({
           message
         });
       }
     default:
       {
-        return __WEBPACK_IMPORTED_MODULE_0_immutable___default.a.Map(state);
+        return _immutable2.default.Map(state);
       }
   }
-});
+};
+
+var _immutable = __webpack_require__(0);
+
+var _immutable2 = _interopRequireDefault(_immutable);
+
+var _DefaultState = __webpack_require__(2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+const debug = __webpack_require__(1)('tgux:reducer');
 
 /***/ }),
 /* 8 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_immutable__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_immutable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_immutable__);
 
 
-/* harmony default export */ __webpack_exports__["a"] = (class {
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _immutable = __webpack_require__(0);
+
+var _immutable2 = _interopRequireDefault(_immutable);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = class {
   constructor(name) {
     this.name = name;
     this.actions = {};
@@ -385,7 +423,7 @@ const debug = __webpack_require__(1)('tgux:reducer');
   }
 
   get keyboards() {
-    let actions = __WEBPACK_IMPORTED_MODULE_0_immutable___default.a.Map(this.actions);
+    let actions = _immutable2.default.Map(this.actions);
     let keyboards = [];
     actions.forEach((value, key) => {
       if (Array.isArray(value)) {
@@ -397,23 +435,32 @@ const debug = __webpack_require__(1)('tgux:reducer');
     }
     return [keyboards];
   }
-});
+};
 
 /***/ }),
 /* 9 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_immutable__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_immutable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_immutable__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_debug__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_debug___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_debug__);
 
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-const debug = __WEBPACK_IMPORTED_MODULE_1_debug___default()('tgux:history');
+var _immutable = __webpack_require__(0);
 
-/* harmony default export */ __webpack_exports__["a"] = (class {
+var _immutable2 = _interopRequireDefault(_immutable);
+
+var _debug = __webpack_require__(1);
+
+var _debug2 = _interopRequireDefault(_debug);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+const debug = (0, _debug2.default)('tgux:history');
+
+exports.default = class {
   constructor(store, reason = 'normal', params = {}) {
     this.store = store;
     this.reason = reason;
@@ -441,20 +488,28 @@ const debug = __WEBPACK_IMPORTED_MODULE_1_debug___default()('tgux:history');
       type: 'BACK'
     });
   }
-});
+};
 
 /***/ }),
 /* 10 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_debug__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_debug___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_debug__);
 
 
-const debug = __WEBPACK_IMPORTED_MODULE_0_debug___default()('tgux:cache');
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-/* harmony default export */ __webpack_exports__["a"] = (class {
+var _debug = __webpack_require__(1);
+
+var _debug2 = _interopRequireDefault(_debug);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+const debug = (0, _debug2.default)('tgux:cache');
+
+exports.default = class {
   constructor() {
     this.data = {};
   }
@@ -477,7 +532,7 @@ const debug = __WEBPACK_IMPORTED_MODULE_0_debug___default()('tgux:cache');
       }
     }.bind(this));
   }
-});
+};
 
 /***/ })
 /******/ ]);
