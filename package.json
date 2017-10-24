@@ -14,7 +14,7 @@
     "example": "example"
   },
   "devDependencies": {
-    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-env": "^1.6.1",
     "backpack-core": "^0.4.1",
     "mocha": "^3.4.2",
     "should": "^11.2.1"
