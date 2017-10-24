@@ -4,8 +4,8 @@ const assert = require('assert')
 const should = require('should')
 
 const Immutable = require('immutable')
-const Reducer = require('../src/Reducer')
-const defaultState = require('../src/DefaultState')
+const Reducer = require('../src/Reducer').default
+const defaultState = require('../src/DefaultState').defaultState
 
 describe('Reducer', function() {
 
